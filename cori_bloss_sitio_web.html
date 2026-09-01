@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cori Bloss | Editorial Jewelry</title>
+    
+    <!-- Fuentes Premium: Playfair Display (Serif) y Lato (Sans-Serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..800;1,400..800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Iconos -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* ==========================================
+           VARIABLES DE COLOR (Nueva Paleta Editorial #7690BC)
+           ========================================== */
+        :root {
+            --primary: #7690BC;          /* Azul Principal */
+            --primary-dark: #5A74A0;     /* Azul oscuro para hovers */
+            --primary-light: #EAEFF6;    /* Fondo azul muy sutil */
+            
+            --bg-base: #F8F9FA;          /* Blanco roto premium */
+            --surface: #FFFFFF;          /* Blanco puro para tarjetas */
+            
+            --text-dark: #1A202C;        /* Casi negro / Azul muy profundo */
+            --text-muted: #64748B;       /* Gris azulado para textos secundarios */
+            
+            --border-color: rgba(118, 144, 188, 0.2);
+        }
+
+        /* ==========================================
+           RESETEO Y UTILIDADES
+           ========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, .logo, .serif {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+        }
+
+        .italic { font-style: italic; }
+        .text-primary { color: var(--primary); }
+        .bg-primary { background-color: var(--primary); color: white; }
+        
+        a { text-decoration: none; color: inherit; }
+        img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        
+        /* Botones Premium */
+        .btn-outline {
+            display: inline-block;
+            padding: 12px 30px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dark);
+            border: 1px solid var(--text-dark);
+            background: transparent;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn-outline::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--primary);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .btn-outline:hover { color: white; border-color: var(--primary); }
+        .btn-outline:hover::before { transform: scaleX(1); transform-origin: left; }
+
+        /* ==========================================
+           1. NAVEGACIÓN EDITORIAL
+           ========================================== */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 4vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(248, 249, 250, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            transition: padding 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dark);
+            position: relative;
+            padding-bottom: 4px;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 1px;
+            background-color: var(--primary);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+        .logo {
+            font-size: 1.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--primary);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .nav-icons { display: flex; gap: 20px; font-size: 1.2rem; color: var(--primary); }
+        .nav-icons i { cursor: pointer; transition: color 0.3s ease; }
+        .nav-icons i:hover { color: var(--primary-dark); }
+
+        /* ==========================================
+           2. HERO SECTION (Asimétrico)
+           ========================================== */
+        #hero {
+            min-height: 100vh;
+            padding: 120px 4vw 60px 4vw;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-text {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: clamp(4rem, 8vw, 7rem);
+            line-height: 0.85;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
+        }
+        
+        .hero-title .outline {
+            color: transparent;
+            -webkit-text-stroke: 1px var(--primary);
+            display: block;
+            margin-left: 10%;
+        }
+
+        .hero-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 350px;
+            margin-bottom: 40px;
+            margin-left: 10%;
+            border-left: 1px solid var(--primary);
+            padding-left: 20px;
+        }
+
+        .hero-images {
+            position: relative;
+            height: 75vh;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .hero-img-main {
+            width: 80%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 200px 200px 0 0; /* Arco moderno */
+        }
+
+        .hero-img-secondary {
+            position: absolute;
+            bottom: -20px;
+            left: -10%;
+            width: 45%;
+            height: 40%;
+            border: 10px solid var(--bg-base);
+            box-shadow: 0 20px 40px rgba(118,144,188,0.15);
+            z-index: 3;
+            overflow: hidden;
+        }
+
+        .decorative-text {
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%) rotate(90deg);
+            font-size: 0.7rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--primary);
+        }
+
+        /* ==========================================
+           3. MARQUEE (Cinta)
+           ========================================== */
+        .marquee {
+            background-color: var(--primary);
+            color: var(--surface);
+            padding: 25px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: scroll 25s linear infinite;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .marquee-content span { margin: 0 40px; opacity: 0.9; }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ==========================================
+           4. SOBRE NOSOTROS (Sticky Scroll)
+           ========================================== */
+        #about {
+            padding: 150px 4vw;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .about-sticky {
+            position: sticky;
+            top: 150px;
+        }
+
+        .section-subtitle {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-subtitle::before {
+            content: ''; width: 30px; height: 1px; background-color: var(--primary);
+        }
+
+        .about-sticky h2 {
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            line-height: 1;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+        }
+
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+
+        .mv-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .mv-card {
+            padding: 40px;
+            background: var(--surface);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+        
+        .mv-card.vision {
+            background-color: var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        .mv-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .mv-card p {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        /* Valores en Lista Minimalista */
+        .values-list {
+            list-style: none;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .values-list li {
+            padding: 30px 0;
+            border-bottom: 1px solid var(--border-color);
+            display: grid;
+            grid-template-columns: 50px 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .val-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-style: italic;
+        }
+
+        .val-text h4 { font-size: 1.2rem; margin-bottom: 5px; }
+        .val-text p { font-size: 0.9rem; color: var(--text-muted); margin: 0; }
+
+        /* ==========================================
+           5. COLECCIONES
+           ========================================== */
+        #collections {
+            padding: 100px 4vw;
+            background-color: var(--surface);
+        }
+
+        .collections-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .collections-header h2 {
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            margin-top: 15px;
+        }
+
+        .category-block {
+            margin-bottom: 100px;
+        }
+
+        .cat-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .cat-title::after {
+            content: ''; flex-grow: 1; height: 1px; background-color: var(--border-color);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .product-card {
+            group: hover;
+            cursor: pointer;
+        }
+
+        .product-img-wrap {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            background-color: var(--bg-base);
+            margin-bottom: 20px;
+        }
+
+        .product-img-wrap img {
+            transition: transform 0.7s ease;
+        }
+
+        .product-card:hover .product-img-wrap img {
+            transform: scale(1.05);
+        }
+
+        .add-to-cart {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background-color: rgba(255,255,255,0.9);
+            backdrop-filter: blur(5px);
+            text-align: center;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary);
+            transition: bottom 0.4s ease;
+            font-weight: 700;
+        }
+
+        .product-card:hover .add-to-cart {
+            bottom: 0;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .product-meta h4 {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 5px;
+        }
+
+        .product-meta .price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-style: italic;
+        }
+
+        /* ==========================================
+           6. GALERÍA EDITORIAL (Bento Grid)
+           ========================================== */
+        #gallery {
+            padding: 100px 4vw;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 400px);
+            gap: 20px;
+        }
+
+        .gal-item {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gal-item:hover img {
+            transform: scale(1.05);
+        }
+        .gal-item img { transition: transform 0.8s ease; }
+
+        /* Asignación de tamaños en la grilla */
+        .gal-item:nth-child(1) { grid-column: 1 / 3; grid-row: 1 / 3; } /* Imagen grande izq */
+        .gal-item:nth-child(2) { grid-column: 3 / 4; grid-row: 1 / 2; }
+        .gal-item:nth-child(3) { grid-column: 4 / 5; grid-row: 1 / 3; } /* Imagen alta der */
+        .gal-item:nth-child(4) { grid-column: 3 / 4; grid-row: 2 / 3; }
+
+        .gal-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(30,39,52,0.6), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 30px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .gal-item:hover .gal-overlay { opacity: 1; }
+        .gal-overlay h3 { color: white; font-size: 1.5rem; letter-spacing: 1px; }
+
+        /* ==========================================
+           7. FOOTER
+           ========================================== */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 80px 4vw 40px 4vw;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .footer-brand .logo {
+            position: static;
+            transform: none;
+            color: white;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .footer-brand p {
+            color: var(--primary-light);
+            max-width: 300px;
+            font-weight: 300;
+        }
+
+        .footer-links h4 {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            color: var(--primary-light);
+        }
+
+        .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 15px; }
+        .footer-links a { color: white; opacity: 0.8; transition: opacity 0.3s; font-size: 0.95rem; }
+        .footer-links a:hover { opacity: 1; padding-left: 5px; }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--primary-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ==========================================
+           RESPONSIVIDAD
+           ========================================== */
+        @media screen and (max-width: 1024px) {
+            .logo { position: static; transform: none; }
+            .nav-links { display: none; } /* En un proyecto real aquí iría un menú hamburguesa */
+            
+            #hero { grid-template-columns: 1fr; padding-top: 150px; text-align: center; gap: 60px; }
+            .hero-title .outline { margin-left: 0; }
+            .hero-desc { margin: 0 auto 40px auto; border-left: none; padding-left: 0; }
+            .hero-images { justify-content: center; height: 50vh; }
+            
+            #about { grid-template-columns: 1fr; padding: 100px 4vw; gap: 40px; }
+            .about-sticky { position: static; text-align: center; }
+            .section-subtitle { justify-content: center; }
+            .mv-grid { grid-template-columns: 1fr; }
+            
+            .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+            .gal-item:nth-child(1), .gal-item:nth-child(2), .gal-item:nth-child(3), .gal-item:nth-child(4) {
+                grid-column: span 1; grid-row: auto; height: 300px;
+            }
+            .footer-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+            .footer-brand p { margin: 0 auto; }
+            .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+        }
+        @media screen and (max-width: 600px) {
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <ul class="nav-links">
+            <li><a href="#about">Esencia</a></li>
+            <li><a href="#collections">Colecciones</a></li>
+            <li><a href="#gallery">Editorial</a></li>
+        </ul>
+        <a href="#" class="logo">Cori Bloss</a>
+        <div class="nav-icons">
+            <i class="ph ph-magnifying-glass"></i>
+            <i class="ph ph-heart"></i>
+            <i class="ph ph-handbag"></i>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="hero-text">
+            <h1 class="hero-title">
+                <span class="outline">Joyería</span>
+                <span class="serif italic text-primary">Atemporal</span>
+            </h1>
+            <p class="hero-desc">Pequeñas joyas que cuentan historias. Creadas en Arequipa para resaltar tu elegancia casual cada día.</p>
+            <a href="#collections" class="btn-outline">Explorar Piezas</a>
+        </div>
+        <div class="hero-images">
+            <div class="hero-img-main">
+                <img src="https://images.unsplash.com/photo-1599643478524-fb66f70a0066?auto=format&fit=crop&w=800&q=80" alt="Modelo con joyas Cori Bloss">
+            </div>
+            <div class="hero-img-secondary">
+                <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=400&q=80" alt="Detalle de anillo">
+            </div>
+            <div class="decorative-text">Estudio Arequipa — 2026</div>
+        </div>
+    </section>
+
+    <section class="marquee">
+        <div class="marquee-content">
+            <span class="serif italic">Diseño Peruano</span> <span>✦</span>
+            <span>Plata 925</span> <span>✦</span>
+            <span class="serif italic">Hecho a mano</span> <span>✦</span>
+            <span>Arequipa 2026</span> <span>✦</span>
+            <span class="serif italic">Envío Nacional</span> <span>✦</span>
+            <span>Diseño Peruano</span> <span>✦</span>
+            <span class="serif italic">Plata 925</span> <span>✦</span>
+            <span>Hecho a mano</span> <span>✦</span>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="about-sticky">
+            <div class="section-subtitle">Nuestra Historia</div>
+            <h2>La Esencia <br><span class="serif italic text-primary">Cori Bloss</span></h2>
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" alt="Inspiración" style="height: 300px; margin-top: 30px;">
+        </div>
+        
+        <div class="about-content">
+            <div class="about-text">
+                <p>Nacimos en 2026 en Arequipa, Perú, con el sueño de crear joyas que acompañen tu estilo diario y momentos especiales. El nombre Cori (del quechua Quri, "oro") y Bloss (de Blossom, "florecer") adquiere el hermoso significado de "Flor de oro". El destello no es un simple reflejo, sino la vitalidad que abraza cada pieza.</p>
+            </div>
+            
+            <div class="mv-grid">
+                <div class="mv-card">
+                    <h3 class="serif italic">Nuestra Misión</h3>
+                    <p>Crear joyas modernas y delicadas que permitan a cada mujer expresar su esencia, acompañándola con piezas versátiles, auténticas y llenas de estilo.</p>
+                </div>
+                <div class="mv-card vision">
+                    <h3 class="serif italic">Nuestra Visión</h3>
+                    <p>Ser la firma reconocida por inspirar confianza, autenticidad y elegancia femenina a través de diseños modernos que conectan profundamente con tu personalidad.</p>
+                </div>
+            </div>
+
+            <ul class="values-list">
+                <li>
+                    <div class="val-num">01</div>
+                    <div class="val-text">
+                        <h4>Creatividad</h4>
+                        <p>Inspirados en la originalidad y expresión.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="val-num">02</div>
+                    <div class="val-text">
+                        <h4>Elegancia</h4>
+                        <p>Sofisticación en cada detalle.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="val-num">03</div>
+                    <div class="val-text">
+                        <h4>Autenticidad</h4>
+                        <p>Reflejando tu esencia y confianza.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="collections">
+        <div class="collections-header">
+            <div class="section-subtitle" style="justify-content: center; margin-bottom: 20px;">Curaduría</div>
+            <h2>Colecciones <span class="serif italic text-primary">Exclusivas</span></h2>
+        </div>
+
+        <!-- Aretes -->
+        <div class="category-block">
+            <h3 class="cat-title serif italic">Aretes</h3>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=600&q=80" alt="Aretes">
+                        <div class="add-to-cart">Añadir a la bolsa</div>
+                    </div>
+                    <div class="product-meta">
+                        <div>
+                            <h4>Aretes Quri Perla</h4>
+                            <span class="price">S/ 85.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=600&q=80" alt="Argollas">
+                        <div class="add-to-cart">Añadir a la bolsa</div>
+                    </div>
+                    <div class="product-meta">
+                        <div>
+                            <h4>Argollas Bloss</h4>
+                            <span class="price">S/ 60.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1702896502035-7157ccf61c56?auto=format&fit=crop&w=600&q=80" alt="Eslabón">
+                        <div class="add-to-cart">Añadir a la bolsa</div>
+                    </div>
+                    <div class="product-meta">
+                        <div>
+                            <h4>Aretes Eslabón</h4>
+                            <span class="price">S/ 75.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Collares -->
+        <div class="category-block">
+            <h3 class="cat-title serif italic">Collares</h3>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=600&q=80" alt="Collar">
+                        <div class="add-to-cart">Añadir a la bolsa</div>
+                    </div>
+                    <div class="product-meta">
+                        <div>
+                            <h4>Collar Stella</h4>
+                            <span class="price">S/ 110.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?auto=format&fit=crop&w=600&q=80" alt="Collar">
+                        <div class="add-to-cart">Añadir a la bolsa</div>
+                    </div>
+                    <div class="product-meta">
+                        <div>
+                            <h4>Collar Multi-capa</h4>
+                            <span class="price">S/ 140.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1611085583191-a3b181a88401?auto=format&fit=crop&w=600&q=80" alt="Collar">
+                        <div class="add-to-cart">Añadir a la bolsa</div>
+                    </div>
+                    <div class="product-meta">
+                        <div>
+                            <h4>Collar Esencial</h4>
+                            <span class="price">S/ 90.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="section-subtitle" style="margin-bottom: 40px;">Lookbook 2026</div>
+        <div class="gallery-grid">
+            <div class="gal-item">
+                <img src="https://images.unsplash.com/photo-1617265893322-263a2a67300a?auto=format&fit=crop&w=800&q=80" alt="Gallery">
+                <div class="gal-overlay"><h3 class="serif italic">La Colección Quri</h3></div>
+            </div>
+            <div class="gal-item">
+                <img src="https://images.unsplash.com/photo-1543294001-f7cd5d7fb516?auto=format&fit=crop&w=600&q=80" alt="Gallery">
+            </div>
+            <div class="gal-item">
+                <img src="https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?auto=format&fit=crop&w=600&q=80" alt="Gallery">
+                <div class="gal-overlay"><h3 class="serif italic">Aros & Anillos</h3></div>
+            </div>
+            <div class="gal-item">
+                <img src="https://images.unsplash.com/photo-1579960533314-722a0a2df335?auto=format&fit=crop&w=600&q=80" alt="Gallery">
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo">Cori Bloss</a>
+                <p>Joyas que capturan la vitalidad y la elegancia. Diseños peruanos creados para mujeres auténticas.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Explorar</h4>
+                <ul>
+                    <li><a href="#about">Nuestra Esencia</a></li>
+                    <li><a href="#collections">Colecciones</a></li>
+                    <li><a href="#gallery">Lookbook</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Soporte</h4>
+                <ul>
+                    <li><a href="#">Envíos y Devoluciones</a></li>
+                    <li><a href="#">Cuidado de Joyas</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Cori Bloss. Todos los derechos reservados.</span>
+            <span>Arequipa, Perú</span>
+        </div>
+    </footer>
+
+</body>
+</html>
